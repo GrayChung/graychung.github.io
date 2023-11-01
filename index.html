@@ -60,6 +60,12 @@
         height: auto; /* 保持宽高比 */
         user-select: none;
     }
+
+    @media (max-width: 600px) {
+        .image-group div {
+        width: 100px; /* 在小屏幕下减小宽度 */
+        height: 100px; /* 在小屏幕下减小高度 */
+    }
     </style>
     <script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
