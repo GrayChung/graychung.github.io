@@ -135,6 +135,9 @@
                 }
             });
             $("#result").html("Result is : " + result);
+            if(result == ans){
+                $("#result").append("   <span style='color:red;'>Correct !!!<span>");
+            }
         }
     
         function random(min, max) {
