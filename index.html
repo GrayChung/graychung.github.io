@@ -70,7 +70,7 @@
                     }
                 });
                 if (maskIndexes.indexOf(i) == -1) {
-                    $('<img src="images/letter_' + char.toLowerCase() + '.png" />').data( 'number', char ).attr( 'id', 'card_'+char ).appendTo(d).draggable( {
+                    $('<img src="images/letter_' + char.toUpperCase() + '.png" />').data( 'number', char ).attr( 'id', 'card_'+char ).appendTo(d).draggable( {
                         // containment: '.container-wrapper',
                         // stack: '#qBlock .box, #wBlock .box',
                         cursor: 'grab',
@@ -97,7 +97,7 @@
                         getResult();
                     }
                 });
-                $('<img src="images/letter_' + char.toLowerCase() + '.png" />').data( 'number', char ).attr( 'id', 'card_'+char ).appendTo(d).draggable( {
+                $('<img src="images/letter_' + char.toUpperCase() + '.png" />').data( 'number', char ).attr( 'id', 'card_'+char ).appendTo(d).draggable( {
                     // containment: '.container-wrapper',
                     // stack: '#qBlock .box, #wBlock .box',
                     cursor: 'grab',
