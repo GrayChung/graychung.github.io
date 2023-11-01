@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link rel="stylesheet" href="scripts/jquery-ui.min.css">
+    <style>
+        img
+        {
+            height: 100px;
+            width: 100px;
+            user-select: none;
+        }
+        .container-wrapper {
+            display: flex;
+            flex-direction: column; /* 设置为列布局，容器垂直排列 */
+        }
+        .container {
+            width: 100%; /* 确保容器宽度占满父元素 */
+        }
+
+        .box {
+            min-width: 100px;
+            min-height: 100px;
+            width: 100px; /* 设置盒子的宽度为一半，以实现并排显示 */
+            float: left; /* 使用浮动使盒子并排 */
+            margin: 5px;
+            padding: 5px;
+            border: 2px solid #333333;
+            user-select: none;
+        }
+    </style>
+    <script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
+    <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script> -->
+    <script>
+        var ans = "backpack";
+        var maskIndexes = [];
+
+        var draged;
+        var draged_parent;
+    
+        $(function(){
+            var maskCount = random(2, ans.length - 3);
+            for(var i = 0; i < maskCount; i++){
+                var maskIndex;
+                if (maskIndexes.length == 0) {
+                    maskIndex = random(0, ans.length - 1);
+                }
+                else{
+                    do {
+                        maskIndex = random(0, ans.length - 1);
+                    } while(maskIndexes.indexOf(maskIndex) != -1)
+                }
+                maskIndexes.push(maskIndex);
+            }
+    
+            // render qBlock for Question
+            for (var i = 0; i < ans.length; i++) {
+                var char = ans[i];
+                var d = $('<div class="box"></div>').appendTo("#qBlock").droppable( {
+                    drop: function(event, ui){
+                        if ($(this).children().length != 0 && draged_parent != null){
+                            $(this).children(0).appendTo(draged_parent);
+                        }
+                        $(this).append(draged);
+                        getResult();
+                    }
+                });
+                if (maskIndexes.indexOf(i) == -1) {
+                    $('<img src="images/letter_' + char + '.png" />').data( 'number', char ).attr( 'id', 'card_'+char ).appendTo(d).draggable( {
+                        // containment: '.container-wrapper',
+                        // stack: '#qBlock .box, #wBlock .box',
+                        cursor: 'grab',
+                        revert: true,
+                        revertDuration: 0,
+                        zIndex: 200,
+                        drag: function(event, ui){
+                            draged = $(this);
+                            draged_parent = $(this).parent();
+                        }
+                    });
+                }
+            }
+    
+            //render wBlock for answer selection
+            for (var i = 0; i < maskIndexes.length; i++) {
+                var char = ans[maskIndexes[i]];
+                var d = $('<div class="box"></div>').appendTo("#wBlock").droppable( {
+                    drop: function(event, ui){
+                        if ($(this).children().length != 0 && draged_parent != null){
+                            $(this).children(0).appendTo(draged_parent);
+                        }
+                        $(this).append(draged);
+                        getResult();
+                    }
+                });
+                $('<img src="images/letter_' + char + '.png" />').data( 'number', char ).attr( 'id', 'card_'+char ).appendTo(d).draggable( {
+                    // containment: '.container-wrapper',
+                    // stack: '#qBlock .box, #wBlock .box',
+                    cursor: 'grab',
+                    revert: true,
+                    revertDuration: 0,
+                    zIndex: 200,
+                    drag: function(event, ui){
+                        draged = $(this);
+                        draged_parent = $(this).parent();
+                    }
+                });
+            }
+        });
+
+        function getResult(){
+            var result = "";
+            $("#qBlock").find(".box").each(function(index){
+                var c = '';
+                if($(this).children().length == 0){
+                    c = "_";
+                }
+                else{
+                    c = $(this).children().attr('id').replace("card_", "");
+                }
+                result += c
+                if(ans[index] == c){
+                    $(this).css("border", "2px solid #0ed63a");
+                }
+                else {
+                    $(this).css("border", "2px solid #333333");
+                }
+            });
+            $("#result").html("Result is : " + result);
+        }
+    
+        function random(min, max) {
+           return Math.floor(Math.random() * (max - min + 1) + min)
+        }
+
+        function getQ(){
+            fetch("settings/setting.txt")
+                .then(response => response.text)
+                .then(data => {
+                    alert(data);
+                })
+        }
+    </script>
+</head>
+<body>
+    <h2>Find missing letters.</h2>
+    <div class="container-wrapper">
+        <div id="qBlock" class="container"></div>
+        <hr/>
+        <div id="wBlock" class="container"></div>
+    </div>
+    <h2 id="result"></h3>
+</body>
+</html>
