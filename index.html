@@ -6,7 +6,7 @@
     <title></title>
     <link rel="stylesheet" href="scripts/jquery-ui.min.css">
     <style>
-        img
+        /* img
         {
             height: 100px;
             width: 100px;
@@ -14,22 +14,53 @@
         }
         .container-wrapper {
             display: flex;
-            flex-direction: column; /* 设置为列布局，容器垂直排列 */
+            flex-direction: column;
         }
         .container {
-            width: 100%; /* 确保容器宽度占满父元素 */
+            width: 100%;
         }
 
         .box {
             min-width: 100px;
             min-height: 100px;
-            width: 100px; /* 设置盒子的宽度为一半，以实现并排显示 */
-            float: left; /* 使用浮动使盒子并排 */
+            width: 100px;
+            float: left;
             margin: 5px;
             padding: 5px;
             border: 2px solid #333333;
             user-select: none;
-        }
+        } */
+    .container-wrapper {
+      display: flex;
+      flex-direction: column; /* 在小屏幕下垂直排列 */
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap; /* 允许多行 */
+      justify-content: center; /* 在容器内水平居中 */
+    }
+
+    .container div {
+      margin-right: 10px; /* 可选的图片间距 */
+    }
+
+    .container img {
+      max-width: 100%; /* 图片宽度最大为容器的100% */
+      height: auto; /* 保持宽高比 */
+    }
+    
+    .box {
+            min-width: 100px;
+            min-height: 100px;
+            width: 100px;
+            float: left;
+            margin: 5px;
+            padding: 5px;
+            border: 2px solid #333333;
+            user-select: none;
+    }
     </style>
     <script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
