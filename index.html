@@ -67,6 +67,11 @@
             height: 30px; /* 在小屏幕下减小高度 */
         }
     }
+
+    .ui-draggable, .ui-droppable {
+        -ms-touch-action: none;
+        touch-action: none;
+    }
     </style>
     <script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
